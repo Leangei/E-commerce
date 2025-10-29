@@ -1,79 +1,109 @@
-<script setup lang="ts">
-import { RouterView } from 'vue-router'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <div id="app">
+    <h2></h2>
 
-    <div class="wrapper">
-      <p>This is my first VueJs Project</p>
+    <div class="category-list">
+      <CategoryCom
+        v-for="(cat, index) in categories"
+        :key="index"
+        :image="cat.image"
+        :title="cat.title"
+        :items="cat.items"
+      />
     </div>
-  </header>
 
-  <RouterView />
+    <h2></h2>
+
+    <div class="Promo-list">
+      <PromotionCom
+        v-for="(promo, index) in promotions"
+        :key="index"
+        :title="promo.title"
+        :image="promo.image"
+        :buttonLabel="promo.buttonLabel"
+        :buttonColor="promo.buttonColor"
+        :backgroundColor="promo.backgroundColor"
+      />
+    </div>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+<script lang="ts">
+import CategoryCom from './components/CategoryCom.vue'
+import PromotionCom from './components/PromotionCom.vue'
+
+export default {
+  name: 'App',
+  components: { CategoryCom, PromotionCom },
+
+  data() {
+    return {
+      categories: [
+        {
+          image: 'public/cat-13 1.png',
+          title: 'Cake & Milk',
+          items: 14,
+        },
+        { image: 'public/cat-11 1.png', title: 'Peach', items: 17 },
+        { image: 'public/cat-12 1.png', title: 'Organic Kiwi', items: 21 },
+        { image: 'public/cat-9 1.png', title: 'Red Apple', items: 68 },
+        { image: 'public/cat-3 1.png', title: 'Snack', items: 34 },
+        { image: 'public/cat-4 1 (1).png', title: 'Block plum', items: 25 },
+        { image: 'public/cat-1 4.png', title: 'Vegetables', items: 65 },
+        { image: 'public/cat-15 1.png', title: 'Headphone', items: 33 },
+        { image: 'public/cat-14 1.png', title: 'Cake & Milk', items: 54 },
+        { image: 'public/cat-7 1.png', title: 'Orange', items: 63 },
+      ],
+
+      promotions: [
+        {
+          title: 'Everyday Fresh & Clean with Our Products',
+          image: 'public/Cms-04 1.png',
+          buttonLabel: 'Shop Now ➜',
+          buttonColor: '#2ecc71',
+          backgroundColor: '#F0E8D5',
+        },
+        {
+          title: 'Make your Breakfast Healthy and Easy',
+          image: 'public/Cat-01 1.png',
+          buttonLabel: 'Shop Now ➜',
+          buttonColor: '#3498db',
+          backgroundColor: '#F3E8E8',
+        },
+        {
+          title: 'Super Sale on Fresh Items',
+          image: 'public/cms-04.png',
+          buttonLabel: 'Shop Now ➜',
+          buttonColor: '#FDC040',
+          backgroundColor: '#E7EAF3',
+        },
+      ],
+    }
+  },
+}
+</script>
+
+<style>
+#app {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  margin-bottom: 10px;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+h2 {
+  margin-bottom: 10px;
+  color: #333;
 }
 
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
+.category-list {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 40px;
 }
+.Promo-list {
+  display: flex;
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+  gap: 15px;
+  margin-top: 40px;
 }
 </style>
