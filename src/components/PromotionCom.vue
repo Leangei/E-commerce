@@ -2,7 +2,7 @@
   <div class="promotion" :style="{ backgroundColor: backgroundColor }">
     <div class="promotion-text">
       <h2>{{ title }}</h2>
-      <ButtonCom :label="buttonLabel" :color="buttonColor" />
+      <ButtonCom :label="buttonLabel" :color="buttonColor" @click="shopNow"/>
     </div>
     <img :src="image" :alt="title" class="promotion-image" />
   </div>
@@ -24,7 +24,14 @@ export default {
       default: '#f0e8d5',
     },
   },
+  methods: {
+    shopNow() {
+      alert("🛍️ Let's shop: " + this.title);
+    },
+  },
+ 
 }
+
 </script>
 
 <style>
