@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     shopNow() {
-      alert("🛍️ Let's shop: " + this.title);
+      alert("Let's shop: " + this.title);
     },
   },
  

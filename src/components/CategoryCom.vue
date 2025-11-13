@@ -1,8 +1,8 @@
 <template>
-  <div class="category-item">
-    <img :src="image" :alt="title" class="category-image" />
-    <h4>{{ title }}</h4>
-    <p>{{ items }} items</p>
+  <div class="category-item" :style="{ backgroundColor: color }">
+    <img :src="image" :alt="name" class="category-image" />
+    <h4>{{ name }}</h4>
+    <p>{{ productCount }} items</p>
   </div>
 </template>
 
@@ -11,8 +11,12 @@ export default {
   name: 'CategoryCom',
   props: {
     image: String,
-    title: String,
-    items: Number,
+    name: String,
+    productCount: Number,
+    color: {
+      type: String,
+      default: '#f2fce4',
+    },
   },
 }
 </script>
@@ -23,7 +27,7 @@ export default {
   height: 177px;
   text-align: center;
   padding: 3px;
-  background: #f2fce4;
+  /* background: #f2fce4; */
   border: 1px;
   border-style: solid;
   border-color: green;

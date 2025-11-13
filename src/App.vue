@@ -6,81 +6,93 @@
       <CategoryCom
         v-for="(cat, index) in categories"
         :key="index"
-        :image="cat.image"
-        :title="cat.title"
-        :items="cat.items"
+        :image="getImageUrl(cat.image)"
+        :name="cat.name"
+        :productCount="cat.productCount"
+        :color="cat.color"
       />
     </div>
 
     <h2></h2>
 
-    <div class="Promo-list">
+    <div class="promo-list">
       <PromotionCom
         v-for="(promo, index) in promotions"
         :key="index"
         :title="promo.title"
-        :image="promo.image"
-        :buttonLabel="promo.buttonLabel"
+        :image="getImageUrl(promo.image)"
+        :buttonLabel="promo.buttonText"
         :buttonColor="promo.buttonColor"
-        :backgroundColor="promo.backgroundColor"
+        :backgroundColor="promo.color"
       />
     </div>
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
 import CategoryCom from './components/CategoryCom.vue'
 import PromotionCom from './components/PromotionCom.vue'
 
-export default {
-  name: 'App',
-  components: { CategoryCom, PromotionCom },
-
-  data() {
-    return {
-      categories: [
-        {
-          image: 'public/cat-13 1.png',
-          title: 'Cake & Milk',
-          items: 14,
-        },
-        { image: 'public/cat-11 1.png', title: 'Peach', items: 17 },
-        { image: 'public/cat-12 1.png', title: 'Organic Kiwi', items: 21 },
-        { image: 'public/cat-9 1.png', title: 'Red Apple', items: 68 },
-        { image: 'public/cat-3 1.png', title: 'Snack', items: 34 },
-        { image: 'public/cat-4 1 (1).png', title: 'Block plum', items: 25 },
-        { image: 'public/cat-1 4.png', title: 'Vegetables', items: 65 },
-        { image: 'public/cat-15 1.png', title: 'Headphone', items: 33 },
-        { image: 'public/cat-14 1.png', title: 'Cake & Milk', items: 54 },
-        { image: 'public/cat-7 1.png', title: 'Orange', items: 63 },
-      ],
-
-      promotions: [
-        {
-          title: 'Everyday Fresh & Clean with Our Products',
-          image: 'public/Cms-04 1.png',
-          buttonLabel: 'Shop Now ➜',
-          buttonColor: '#2ecc71',
-          backgroundColor: '#F0E8D5',
-        },
-        {
-          title: 'Make your Breakfast Healthy and Easy',
-          image: 'public/Cat-01 1.png',
-          buttonLabel: 'Shop Now ➜',
-          buttonColor: '#3498db',
-          backgroundColor: '#F3E8E8',
-        },
-        {
-          title: 'Super Sale on Fresh Items',
-          image: 'public/cms-04.png',
-          buttonLabel: 'Shop Now ➜',
-          buttonColor: '#FDC040',
-          backgroundColor: '#E7EAF3',
-        },
-      ],
-    }
-  },
+interface Category {
+  id?: number
+  name: string
+  url?: string
+  productCount: number
+  color?: string
+  image: string
 }
+
+interface Promotion {
+  id?: number
+  title: string
+  color?: string
+  image: string
+  url?: string
+  buttonText: string
+  buttonColor: string
+}
+
+const categories = ref<Category[]>([])
+const promotions = ref<Promotion[]>([])
+
+const API_BASE_URL = 'http://localhost:3000'
+
+const getImageUrl = (imagePath: string | undefined) => {
+  if (!imagePath) {
+    return 'https://via.placeholder.com/300x200?text=No+Image'
+  }
+  if (imagePath.startsWith('http')) {
+    return imagePath
+  }
+  return `${API_BASE_URL}${imagePath.startsWith('/') ? '' : '/'}${imagePath}`
+}
+
+const fetchCategories = async () => {
+  try {
+    const response = await axios.get<Category[]>(`${API_BASE_URL}/api/categories`)
+    console.log('Categories API Response:', response.data)
+    categories.value = response.data
+  } catch (error) {
+    console.error('Error fetching categories:', error)
+  }
+}
+
+const fetchPromotions = async () => {
+  try {
+    const response = await axios.get<Promotion[]>(`${API_BASE_URL}/api/promotions`)
+    console.log('Promotions API Response:', response.data)
+    promotions.value = response.data
+  } catch (error) {
+    console.error('Error fetching promotions:', error)
+  }
+}
+
+onMounted(() => {
+  fetchCategories()
+  fetchPromotions()
+})
 </script>
 
 <style>
@@ -100,9 +112,9 @@ h2 {
   gap: 15px;
   margin-bottom: 40px;
 }
-.Promo-list {
-  display: flex;
 
+.promo-list {
+  display: flex;
   gap: 15px;
   margin-top: 40px;
 }
