@@ -34,6 +34,9 @@ import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import CategoryCom from './components/CategoryCom.vue'
 import PromotionCom from './components/PromotionCom.vue'
+import { useProductStore } from './stores/productStore'
+// STORE
+const productStore = useProductStore()
 
 interface Category {
   id?: number
