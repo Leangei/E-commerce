@@ -1,49 +1,73 @@
+// src/stores/productStore.ts
 import { defineStore } from "pinia";
 import axios from "axios";
 
+// Define types
+interface Group {
+  id: number;
+  name: string;
+}
+
+interface Category {
+  id: number;
+  name: string;
+  group: string; // must match the group's name
+}
+
+interface Promotion {
+  id: number;
+  title: string;
+}
+
+export interface Product {
+  id: number;
+  name: string;
+  brand: string;
+  price: number;
+  image: string;
+  group: string;
+  categoryId: number;
+  countSold: number;
+
+  size?: string;   // optional
+  rating?: number; // optional
+  promotionAsPercentage?: number;
+  oldPrice?: number;
+}
+
+
+
 export const useProductStore = defineStore("product", {
   state: () => ({
-    groups: [],
-    promotions: [],
-    categories: [],
-    products: []
+    groups: [] as Group[],
+    promotions: [] as Promotion[],
+    categories: [] as Category[],
+    products: [] as Product[]
   }),
 
   getters: {
-    // 1. List all categories by group name
-    getCategoriesByGroup: (state) => {
-      return (groupName) =>
-        state.categories.filter((category) => category.group === groupName);
-    },
+    getCategoriesByGroup: (state) => (groupName: string) =>
+      state.categories.filter((category) => category.group === groupName),
 
-    // 2. List all products by group name
-    getProductsByGroup: (state) => {
-      return (groupName) =>
-        state.products.filter((product) => product.group === groupName);
-    },
+    getProductsByGroup: (state) => (groupName: string) =>
+      state.products.filter((product) => product.group === groupName),
 
-    // 3. List all products by categoryId
-    getProductsByCategory: (state) => {
-      return (categoryId) =>
-        state.products.filter((product) => product.categoryId === categoryId);
-    },
+    getProductsByCategory: (state) => (categoryId: number) =>
+      state.products.filter((product) => product.categoryId === categoryId),
 
-    // 4. Popular products (countSold > 10)
-    getPopularProducts: (state) => {
-      return state.products.filter((product) => product.countSold > 10);
-    }
+    getPopularProducts: (state) =>
+      state.products.filter((product) => product.countSold > 10)
   },
 
   actions: {
     async loadAllData() {
       try {
         const base = "http://localhost:3000/api";
-
         const [catRes, promoRes, groupRes, prodRes] = await Promise.all([
-          axios.get(`${base}/categories`),
-          axios.get(`${base}/promotions`),
-          axios.get(`${base}/groups`),
-          axios.get(`${base}/products`)
+          axios.get<Category[]>(`${base}/categories`),
+          axios.get<Promotion[]>(`${base}/promotions`),
+          axios.get<Group[]>(`${base}/groups`),
+          axios.get<Product[]>(`${base}/products`)
         ]);
 
         this.categories = catRes.data;

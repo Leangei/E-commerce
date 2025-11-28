@@ -29,7 +29,7 @@ export default {
       alert("Let's shop: " + this.title);
     },
   },
- 
+
 }
 
 </script>
