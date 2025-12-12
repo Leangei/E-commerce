@@ -1,8 +1,8 @@
 <template>
-  <div class="promotion" :style="{ backgroundColor: backgroundColor }">
+  <div class="promotion" :style="{ backgroundColor: backgroundColor }" @click="goToProduct">
     <div class="promotion-text">
       <h2>{{ title }}</h2>
-      <ButtonCom :label="buttonLabel" :color="buttonColor" @click="shopNow"/>
+      <ButtonCom :label="buttonLabel" :color="buttonColor" @click.stop="shopNow"/>
     </div>
     <img :src="image" :alt="title" class="promotion-image" />
   </div>
@@ -10,6 +10,7 @@
 
 <script lang="ts">
 import ButtonCom from './ButtonCom.vue'
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'PromotionCom',
@@ -24,14 +25,19 @@ export default {
       default: '#f0e8d5',
     },
   },
+  setup() {
+    const router = useRouter()
+    const goToProduct = () => {
+      router.push('/products/1') // <-- navigate to product 1
+    }
+    return { goToProduct }
+  },
   methods: {
     shopNow() {
       alert("Let's shop: " + this.title);
     },
   },
-
 }
-
 </script>
 
 <style>

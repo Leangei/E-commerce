@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import CategoryView from '../views/CategoryView.vue'
 import ProductView from '../views/ProductView.vue'
 
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -23,6 +24,7 @@ const router = createRouter({
       component: () => import( '../views/ProductView.vue'),
 
     },
+
   ],
 });
 

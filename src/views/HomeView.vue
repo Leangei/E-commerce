@@ -2,6 +2,11 @@
 
 
   <div id="app">
+    <section>
+      <div class="homepage">
+        <img src="/Hero.png"/>
+      </div>
+    </section>
       <section >
       <div class="featured">
       <MenuCom title="Featured Categories"/>
@@ -45,7 +50,6 @@
       </div>
     </section>
 
-    <!-- 6. PRODUCT GRID (uses ProductCard.vue) -->
     <section class="products">
       <ProductCard
         v-for="prod in productStore.products"
@@ -62,8 +66,8 @@
 
 import CategoryCom from '../components/CategoryCom.vue'
 import PromotionCom from '../components/PromotionCom.vue'
-import MenuCom from '../components/MenuCom.vue'
 import ProductCard from '../components/ProductCom.vue'
+import MenuCom from '../components/MenuCom.vue'
 
 // Import product store (corrected)
 import { useProductStore } from '../stores/productStore'
@@ -136,6 +140,10 @@ interface Promotion {
   padding: 20px;
   font-family: Arial, sans-serif;
   margin-bottom: 10px;
+}
+.homepage img{
+  width: 1250px;
+  height: auto;
 }
 
 h2 {
