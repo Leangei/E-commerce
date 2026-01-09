@@ -6,6 +6,7 @@ use App\Models\Categories;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
+
 class CategoryController extends Controller
 {
     // Get all categories
@@ -63,4 +64,6 @@ class CategoryController extends Controller
         $products = $category->products;
         return response()->json($products);
     }
+    
+   
 }
