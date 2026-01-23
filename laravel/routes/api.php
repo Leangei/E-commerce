@@ -5,6 +5,7 @@ use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AuthorController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -43,3 +44,6 @@ Route::post('/login', function (Request $request) {
 Route::middleware('auth:api')->group(function () {
     Route::get('/me', fn(Request $r) => $r->user()->load('roles'));
 });
+
+
+Route::post('/authors', [AuthorController::class, 'store']);
